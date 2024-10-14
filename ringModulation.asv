@@ -1,46 +1,41 @@
-function   tremolo(input,ampl,freq,output)
+function   ringModulation(input,freq,output)
 [y,Fs]=audioread(input);
 samples=length(y);
 t=(0:samples-1)'/Fs;
-mod=1+ampl*sin(2 * pi * freq .* t);
+mod=sin(2 * pi * freq * t);
 newy=zeros(size(y));
 
 for i=1:samples
     newy(i)=y(i)*mod(i);
 end
 audiowrite(output,newy,Fs);
-
+samples=1000;
 figure;
     subplot(3,1,1);
-    plot(y(1:1000));
+    plot(y(1:samples));
     title('Input Wave');
     xlabel('Sample Number');
     ylabel('Amplitude');
     
     subplot(3,1,2);
-    plot(newy(1:1000));
+    plot(newy(1:samples));
     title('Output Wave ');
     xlabel('Sample Number');
     ylabel('Amplitude');
     
     subplot(3,1,3);
-    plot(mod(1:1000));
+    plot(mod(1:samples));
     title('Carrier Signal');
     xlabel('Sample Number');
     ylabel('Amplitude');
-
-     figure;
+    
+  
+    figure;
     subplot(2,1,1);
     spectrogram(y, 512,256,1024, 'yaxis');
     title('Input Signal');
-    xlabel('Time');
-    ylabel('Frequency');
     
     subplot(2,1,2);
-    spectrogram(newy,512,256,1024 ,'yaxis');
+    spectrogram(newy,512,256,2048, 'yaxis');
     title('Output Signal');
-    xlabel('Time');
-    ylabel('Frequency');
-
 end
-    

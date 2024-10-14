@@ -12,31 +12,34 @@ audiowrite(output,newy,Fs);
 
 figure;
     subplot(3,1,1);
-    plot(y(1:samples));
+    plot(y(1:1000));
     title('Input Wave');
     xlabel('Sample Number');
     ylabel('Amplitude');
     
     subplot(3,1,2);
-    plot(newy(1:samples));
+    plot(newy(1:1000));
     title('Output Wave ');
     xlabel('Sample Number');
     ylabel('Amplitude');
     
     subplot(3,1,3);
-    plot(mod(1:samples));
-    title('Carrier Signal )');
+    plot(mod(1:1000));
+    title('Carrier Signal');
     xlabel('Sample Number');
     ylabel('Amplitude');
     
-    % Plot spectrogram of the input signal
+  
     figure;
     subplot(2,1,1);
-    spectrogram(y, 'window',256, nfft,1024, 'yaxis');
-    title('Spectrogram of Input Signal');
+    spectrogram(y, 512,256,1024, 'yaxis');
+    title('Input Signal');
+    xlabel('Time');
+    ylabel('Frequency');
     
-    % Plot spectrogram of the output signal
     subplot(2,1,2);
-    spectrogram(newy,'window',256, nfft, 1024, 'yaxis');
-    title('Spectrogram of Output Signal');
+    spectrogram(newy,512,256,1024 ,'yaxis');
+    title('Output Signal');
+    xlabel('Time');
+    ylabel('Frequency');
 end
