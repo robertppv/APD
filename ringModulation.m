@@ -32,13 +32,13 @@ figure;
   
     figure;
     subplot(2,1,1);
-    spectrogram(y, 512,256,1024, 'yaxis');
+    spectrogram(y);
     title('Input Signal');
     xlabel('Time');
     ylabel('Frequency');
     
     subplot(2,1,2);
-    spectrogram(newy,512,256,1024 ,'yaxis');
+    spectrogram(newy);
     title('Output Signal');
     xlabel('Time');
     ylabel('Frequency');
