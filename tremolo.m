@@ -1,12 +1,12 @@
 function   tremolo(input,ampl,freq,output)
 [y,Fs]=audioread(input);
-samples=length(y);
-t=(0:samples-1)'/Fs;
-mod=1+ampl*sin(2 * pi * freq .* t);
+Fc=freq/Fs;
 newy=zeros(size(y));
 
-for i=1:samples
-    newy(i)=y(i)*mod(i);
+for i=1:length(y)
+    mod(i)=1+ampl*sin(2 * pi * Fc * i);
+    newy(i,1)= y(i,1)*mod(i);
+    newy(i,2)=y(i,2)*mod(i);
 end
 audiowrite(output,newy,Fs);
 
@@ -31,13 +31,13 @@ figure;
 
      figure;
     subplot(2,1,1);
-    spectrogram(y);
-    title('Input Signal');
+   spectrogram(y(:,1));
+    title('Input Signal Chanel 1');
     xlabel('Time');
     ylabel('Frequency');
     
     subplot(2,1,2);
-    spectrogram(newy);
+    spectrogram(newy(:,1));
     title('Output Signal');
     xlabel('Time');
     ylabel('Frequency');
