@@ -8,8 +8,7 @@ if(channels==2)
     circularBuffer = zeros(maxcircularBuff, 2);
     newy = zeros(samples, 2);
     for n = 1:samples
-        modulation = sin(2 * pi * flangerRate * n/Fs) + 1;
-        modulation = modulation * (maxcircularBuff - mincircularBuff) + mincircularBuff;
+        modulation = (modValue-mincircularBuff)*sin(2 * pi * flangerRate * n/Fs) + 1;
         delaySamples = uint32(modulation);
         readIndex = mod(bufferIndex - delaySamples - 1, maxcircularBuff) + 1;
         newy(n, 1) = y(n, 1) + modValue *circularBuffer(readIndex, 1);

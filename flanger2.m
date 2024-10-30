@@ -6,7 +6,6 @@ gain=0.5;
 feedbackGain=0.5;
 
 buffIndex=uint32(1);
-
 if(numChannels==2)
     circularBuff=zeros(circularBuffSize, 2);
     newy=zeros(samples,2);
@@ -14,7 +13,6 @@ if(numChannels==2)
     for n=1:samples
         newy(n,1)=y(n,1) + gain*circularBuff(buffIndex,1);
         newy(n,2)=y(n,2) + gain*circularBuff(buffIndex,2);
-        
         circularBuff(buffIndex,1)=y(n,1) + feedbackGain * circularBuff(buffIndex,1);
         circularBuff(buffIndex,2)=y(n,2) + feedbackGain * circularBuff(buffIndex,2);
         buffIndex=mod(buffIndex,circularBuffSize)+1;
