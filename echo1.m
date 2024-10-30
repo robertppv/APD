@@ -1,37 +1,33 @@
-function echo1(input, output, circularBuffSize)
-    [y, Fs] = audioread(input);
-    Samples = length(y);
-    circularBuffer = zeros(circularBuffSize, 2); 
-    bufferIndex = uint32(1); 
-    newy = zeros(Samples, 1);
-    gain = 0.5;
-    feedbackgain=0.7;
-    for n = 1:Samples
-        currentSample1 = y(n,1); 
-        currentSample2 = y(n,2); 
-        echoSample1 = circularBuffer(bufferIndex, 1);
-        echoSample2 = circularBuffer(bufferIndex, 2);
-        outputSample1 = currentSample1 + gain * echoSample1;  
-        outputSample2 = currentSample2 + gain * echoSample2;    
-        newy(n,1) = outputSample1;        
-        newy(n,2) = outputSample2; 
-        circularBuffer(bufferIndex, 1) = currentSample1 + feedbackgain * echoSample1;
-        circularBuffer(bufferIndex, 2) = currentSample2 + feedbackgain * echoSample2;
-        bufferIndex = mod(bufferIndex, circularBuffSize) + 1;
+function echo1(input,output,circularBuffSize)
+[y,Fs]=audioread(input);
+samples = length(y);
+numChannels=size(y,2);
+gain=0.5;
+feedbackGain=0.5;
+
+buffIndex=uint32(1);
+
+if(numChannels==2)
+    circularBuff=zeros(circularBuffSize, 2);
+    newy=zeros(samples,2);
+
+    for n=1:samples
+        newy(n,1)=y(n,1) + gain*circularBuff(buffIndex,1);
+        newy(n,2)=y(n,2) + gain*circularBuff(buffIndex,2);
+        circularBuff(buffIndex,1)=y(n,1) + feedbackGain * circularBuff(buffIndex,1);
+        circularBuff(buffIndex,2)=y(n,2) + feedbackGain * circularBuff(buffIndex,2);
+        buffIndex=mod(buffIndex,circularBuffSize)+1;
     end
+else
+    circularBuff=zeros(circularBuffSize, 1);
+    newy=zeros(samples,1);
 
-    audiowrite(output, newy, Fs);
+    for n=1:samples
+        newy(n,1)=y(n,1) + gain*circularBuff(buffIndex,1) + feedbackGain * circularBuff(buffIndex,1);
+        circularBuff(buffIndex,1)=y(n,1);
+        buffIndex=mod(buffIndex,circularBuffSize)+1;
+    end
+end
 
-    figure;
-    subplot(2, 1, 1);
-    plot(y);
-    title('Input');
-    xlabel('Samples Number');
-    ylabel('Amplitude');
-
-    subplot(2, 1, 2);
-    plot(newy);
-    title('Output');
-    xlabel('Samples Number');
-    ylabel('Amplitude');
+audiowrite(output,newy,Fs);
 end
