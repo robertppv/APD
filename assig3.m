@@ -7,19 +7,19 @@ function assig3(x, fs)
     figure;
     subplot(3, 1, 1);
     plot(t, x);
-    title('Amplitude of the Signal');
+    title('Amplitude ');
     xlabel('Time (s)');
     ylabel('Amplitude');
-    grid on;
+    
 
    
     magnitude = abs(X) / N; 
     subplot(3, 1, 2);
-    plot(f(1:N/2), magnitude(1:N/2));  
-    title('Magnitude Spectrum');
-    xlabel('Frequency (Hz)');
-    ylabel('|X(f)|');
-    grid on;
+    plot(f, magnitude);  
+    title('Magnitude');
+    xlabel('Frequency');
+    ylabel('X(f)');
+    
 
 
     subplot(3, 1, 3);

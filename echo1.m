@@ -4,7 +4,6 @@ samples = length(y);
 numChannels=size(y,2);
 gain=0.5;
 feedbackGain=0.5;
-
 buffIndex=uint32(1);
 
 if(numChannels==2)
