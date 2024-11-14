@@ -1,0 +1,28 @@
+function assig3FILTER(input,output)
+[y,Fs]=audioread(input);
+
+X = fft(y);
+nX=fftshift(X);
+magnitudeX = abs(nX);
+N=length(X);
+
+f = (-N/2:N/2-1)*(Fs/N);
+subplot(2,2,2);
+plot(f, magnitudeX);
+title('Input Magnitude');
+xlabel('Frequency');
+ylabel('Magnitude');
+
+Y=filter(Num,Den,y);
+newY=fft(Y);
+nY=fftshift(newY);
+magnitudeY=abs(Ny);
+subplot(2,2,2);
+plot(f, magnitudeX);
+title('Input Magnitude');
+xlabel('Frequency');
+ylabel('Magnitude');
+
+end
+
+

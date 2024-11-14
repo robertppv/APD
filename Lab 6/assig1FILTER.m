@@ -6,9 +6,9 @@ Rp = 3;
 Ast = 30;
 h = fdesign.lowpass('Fp,Fst,Ap,Ast', Fp, Fst, Rp, Ast, Fs);
 
-h1=design(h,'equiripple','MinPhase',true);
-%t = 0:1/Fs:1-1/Fs;
-%x = 15 * sin(2 * pi * 10 * t - pi/4) + 20 * sin(2 * pi * 30 * t) +35 * sin(2 * pi * 70 * t + 3*pi/4);
+h1=design(h,'MinPhase',true);
+t = 0:1/Fs:1-1/Fs;
+x = 15 * sin(2 * pi * 10 * t - pi/4) + 20 * sin(2 * pi * 30 * t) +35 * sin(2 * pi * 70 * t + 3*pi/4);
 
 
 newX=filter(h1,x);
