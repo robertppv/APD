@@ -3,7 +3,7 @@ load data.mat
 
 %decode sound to morse
 
-[y, fs] = audioread('morseCode1.wav');
+[y, fs] = audioread('morseCode2.wav');
 y=abs(y);
 N=length(y);
 plot(y);
